@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-@RequestMapping("/home/test")
+@RequestMapping("/test")
 public class HomeApplication {
 
     public static void main(String[] args) {
@@ -20,5 +20,6 @@ public class HomeApplication {
     public String test(){
         return "hello! The home project will start on here! ";
     }
+    // LMWAYTQOJYHEYa2
 
 }
