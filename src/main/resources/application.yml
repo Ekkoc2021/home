@@ -7,7 +7,9 @@ mybatis:
   # mybatis.mapper-locations=classpath*:mapper/**/*.xml,classpath*:com/example/mapper/*.xml
   mapper-locations: classpath:com/yang/home/cipherkey/mapper/*.xml
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl mybatis.configuration.
+    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl # 使用log4j输出日志
+
     map-underscore-to-camel-case: true # 驼峰转化
 
 spring:
@@ -72,3 +74,21 @@ spring:
         allow: 127.0.0.1
         # IP黑名单（共同存在时，deny优先于allow）
         deny:
+
+#日志配置 无特殊需求无需更改
+logging:
+  config:  classpath:log4j2.xml
+  level:
+    root: INFO
+    javax.activation: info
+    org.apache.catalina: INFO
+    org.apache.commons.beanutils.converters: INFO
+    org.apache.coyote.http11.Http11Processor: INFO
+    org.apache.http: INFO
+    org.apache.tomcat: INFO
+    org.springframework: INFO
+    com.chinamobile.cmss.bdpaas.resource.monitor: DEBUG
+    #特定包的SQL日志==>调试用
+    com.yang.home.cipherkey.mapper: DEBUG
+    # mybatis核心日志
+    org.mybatis: DEBUG
