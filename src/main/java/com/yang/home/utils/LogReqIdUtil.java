@@ -1,10 +1,11 @@
 package com.yang.home.utils;
 
 import org.slf4j.MDC;
+
 import java.util.UUID;
 
 public final class LogReqIdUtil {
-    private LogReqIdUtil(){
+    private LogReqIdUtil() {
 
     }
 
@@ -12,17 +13,17 @@ public final class LogReqIdUtil {
     private static final String REQ_ID = "REQ_ID";
 
     // 生成序号的
-    private static String generateId(){
+    private static String generateId() {
         return UUID.randomUUID().toString();
     }
 
     // 设置MDC
-    public static void setMDCLogReqId(){
+    public static void setMDCLogReqId() {
         String id = generateId();
-        MDC.put(REQ_ID,id);
+        MDC.put(REQ_ID, id);
     }
 
-    public static void removeMDCLogReqId(){
+    public static void removeMDCLogReqId() {
         MDC.remove(REQ_ID);
     }
 }
