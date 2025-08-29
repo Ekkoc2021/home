@@ -78,8 +78,9 @@ spring:
 #日志配置 无特殊需求无需更改
 logging:
   config:  classpath:log4j2.xml
+  # 控制台输出日志
   level:
-    root: INFO
+    root: DEBUG
     javax.activation: info
     org.apache.catalina: INFO
     org.apache.commons.beanutils.converters: INFO
