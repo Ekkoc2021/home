@@ -1,8 +1,7 @@
 package com.yang.home;
 
 
-import com.sun.org.apache.bcel.internal.generic.RET;
-import com.yang.home.config.ThreadPoolService;
+import com.yang.home.async.AsyncTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import java.util.function.Supplier;
 
 
 @SpringBootApplication
+@EnableAsync // 允许异步机制
 @RestController
 @RequestMapping("/test")
 public class HomeApplication {
@@ -74,6 +76,8 @@ public class HomeApplication {
     @Qualifier("TestPool")
     ThreadPoolExecutor testPool;
 
+    @Autowired
+    AsyncTest asyncTest;
     // 线程池基本使用
     @GetMapping("/thread/{task}")
     public String thread(@PathVariable String task) {
@@ -136,8 +140,13 @@ public class HomeApplication {
         // 获取各个结果
         String result1 = future1.join();
         logger.debug("执行的线程名称:{}", result1);
+
+        // 调用异步方法
+        asyncTest.async();
+
         String result2 = future2.join();
         logger.debug("执行的线程名称:{}", result2);
+
         return "线程池测试:" + task;
     }
 
