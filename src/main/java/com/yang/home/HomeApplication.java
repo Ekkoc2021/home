@@ -2,6 +2,7 @@ package com.yang.home;
 
 
 import com.yang.home.async.AsyncTest;
+import com.yang.home.utils.LogReqIdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -11,6 +12,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,8 +75,8 @@ public class HomeApplication {
     // LMWAYTQOJYHEYa2
 
     @Autowired
-    @Qualifier("TestPool")
-    ThreadPoolExecutor testPool;
+    @Qualifier("TestPool2")
+    ThreadPoolTaskExecutor testPool;
 
     @Autowired
     AsyncTest asyncTest;
@@ -127,6 +129,7 @@ public class HomeApplication {
             }
             return Thread.currentThread().getName();
         };
+        supplier1 = LogReqIdUtil.wrap(supplier1);
         CompletableFuture<String> future1 = CompletableFuture
                 .supplyAsync(supplier1) // 提交异步任务,第二个参数就是指定线程池
                 .thenApply(data-> "线程池测试:" + data); // 数据处理

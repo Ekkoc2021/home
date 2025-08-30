@@ -1,7 +1,9 @@
 package com.yang.home.config;
 
+import com.yang.home.utils.LogReqIdUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.*;
 
@@ -24,5 +26,26 @@ public class ThreadPoolService {
 		// DiscardOldestPolicy：丢弃队列中最老的任务，然后重新提交当前任务
 
 		return threadPoolExecutor;
+	}
+
+	@Bean("TestPool2")
+	public ThreadPoolTaskExecutor threadPoolTaskExecutor() {
+
+
+		ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+		threadPoolTaskExecutor.setCorePoolSize(4);
+		threadPoolTaskExecutor.setMaxPoolSize(8);
+		threadPoolTaskExecutor.setQueueCapacity(5536);
+		threadPoolTaskExecutor.setKeepAliveSeconds(5);
+		threadPoolTaskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+
+		threadPoolTaskExecutor.setTaskDecorator(new LogReqIdUtil.MdcTaskDecorator()); // 设置装饰器
+
+		threadPoolTaskExecutor.setThreadNamePrefix("spring-pool-");
+		threadPoolTaskExecutor.setWaitForTasksToCompleteOnShutdown(true); // 关闭程序时等待等待线程池中的任务执行完成再关闭
+		threadPoolTaskExecutor.initialize();
+
+
+		return threadPoolTaskExecutor;
 	}
 }

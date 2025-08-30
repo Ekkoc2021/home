@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AsyncTest {
     private static final Logger logger = LoggerFactory.getLogger(AsyncTest.class);
-    @Async("TestPool") // 指定线程池，不指定用默认线程池
+    @Async("TestPool2") // 指定线程池，不指定用默认线程池
     public void async(){
         try {
             Thread.sleep(3000);
