@@ -1,9 +1,13 @@
 package com.yang.home;
 
 
+import com.sun.org.apache.bcel.internal.generic.RET;
+import com.yang.home.config.ThreadPoolService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.UUID;
+import java.util.concurrent.*;
+import java.util.function.Supplier;
 
 
 @SpringBootApplication
@@ -27,9 +33,8 @@ public class HomeApplication {
     }
 
 
-
     @GetMapping("/hello")
-    public String test(){
+    public String test() {
         return "hello! The home project will start on here! ";
     }
 
@@ -64,5 +69,76 @@ public class HomeApplication {
     }
 
     // LMWAYTQOJYHEYa2
+
+    @Autowired
+    @Qualifier("TestPool")
+    ThreadPoolExecutor testPool;
+
+    // 线程池基本使用
+    @GetMapping("/thread/{task}")
+    public String thread(@PathVariable String task) {
+
+        // runable
+        testPool.execute(() -> {
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            logger.info("线程池测试:{}->{}", Thread.currentThread().getName(), task);
+
+        });
+
+
+        // callable
+        // 有返回值调用: 创建callable -> 放入submit -> 获取结果
+        Callable<String> callable = new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                logger.info("线程池测试:{}->{}", Thread.currentThread().getName(), task);
+                return Thread.currentThread().getName();
+            }
+        };
+        Future<String> future = testPool.submit(callable);
+        // 阻塞获取结果
+        try {
+            String result = future.get(); // 阻塞等待
+            logger.info("执行的线程名称:{}", result);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        // Supplier
+        Supplier<String> supplier1 = () -> {
+            logger.info("supplier 执行的线程名称:{}",Thread.currentThread().getName() );
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return Thread.currentThread().getName();
+        };
+        CompletableFuture<String> future1 = CompletableFuture
+                .supplyAsync(supplier1) // 提交异步任务,第二个参数就是指定线程池
+                .thenApply(data-> "线程池测试:" + data); // 数据处理
+                // thenAccept 用最终处理数据
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> Thread.currentThread().getName());
+
+        CompletableFuture<Void> allFutures = CompletableFuture.allOf(future1, future2);
+        // 等待所有任务完成
+        allFutures.join();
+        // 获取各个结果
+        String result1 = future1.join();
+        logger.debug("执行的线程名称:{}", result1);
+        String result2 = future2.join();
+        logger.debug("执行的线程名称:{}", result2);
+        return "线程池测试:" + task;
+    }
 
 }
