@@ -1,8 +1,11 @@
 package com.yang.home.utils;
 
 import org.slf4j.MDC;
+import org.springframework.core.task.TaskDecorator;
 
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.Callable;
 
 public final class LogReqIdUtil {
     private LogReqIdUtil() {
@@ -25,5 +28,27 @@ public final class LogReqIdUtil {
 
     public static void removeMDCLogReqId() {
         MDC.remove(REQ_ID);
+    }
+
+    // 线程池任务装饰器 ==> 只能解决callable和runable
+    public static class MdcTaskDecorator implements TaskDecorator {
+        @Override
+        public Runnable decorate(Runnable runnable) {
+            // 获取当前线程的 MDC 上下文
+            Map<String, String> contextMap = MDC.getCopyOfContextMap();
+            return () -> {
+                try {
+                    // 设置 MDC 上下文到新线程
+                    if (contextMap != null) {
+                        MDC.setContextMap(contextMap);
+                    }
+                    runnable.run();
+                } finally {
+                    // 清理新线程的 MDC 上下文
+                    MDC.clear();
+                }
+            };
+        }
+
     }
 }
