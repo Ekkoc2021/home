@@ -5,8 +5,13 @@
     <groupId>com.yang</groupId>
     <artifactId>home</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>home</name>
     <description>home</description>
+    <modules>
+        <module>cipherkey</module>
+        <module>common</module>
+    </modules>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,22 +59,22 @@
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.yang</groupId>
-            <artifactId>home</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.yang</groupId>-->
+<!--            <artifactId>home</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
         <!--        Mybatis依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring-boot}</version>
+<!--            <version>${mybatis-spring-boot}</version>-->
         </dependency>
         <!--        Mysql连接依赖-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.26</version> <!-- 请确保使用最新的MySQL JDBC驱动版本 -->
+<!--            <version>8.0.26</version> &lt;!&ndash; 请确保使用最新的MySQL JDBC驱动版本 &ndash;&gt;-->
         </dependency>
 
         <!--德鲁伊依赖-->
@@ -103,6 +108,34 @@
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!--        Mybatis依赖-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot}</version>
+            </dependency>
+            <!--        Mysql连接依赖-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>8.0.26</version> <!-- 请确保使用最新的MySQL JDBC驱动版本 -->
+            </dependency>
+
+            <!--德鲁伊依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-3-starter</artifactId>
+                <version>1.2.20</version>
+            </dependency>
+
+            <!--lombok插件-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.24</version>
+                <optional>true</optional>
             </dependency>
 
         </dependencies>
