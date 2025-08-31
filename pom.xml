@@ -59,22 +59,22 @@
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.yang</groupId>-->
-<!--            <artifactId>home</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.yang</groupId>-->
+        <!--            <artifactId>home</artifactId>-->
+        <!--            <version>0.0.1-SNAPSHOT</version>-->
+        <!--        </dependency>-->
         <!--        Mybatis依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-<!--            <version>${mybatis-spring-boot}</version>-->
+            <!--            <version>${mybatis-spring-boot}</version>-->
         </dependency>
         <!--        Mysql连接依赖-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-<!--            <version>8.0.26</version> &lt;!&ndash; 请确保使用最新的MySQL JDBC驱动版本 &ndash;&gt;-->
+            <!--            <version>8.0.26</version> &lt;!&ndash; 请确保使用最新的MySQL JDBC驱动版本 &ndash;&gt;-->
         </dependency>
 
         <!--德鲁伊依赖-->
@@ -158,53 +158,61 @@
             </plugin>
 
             <!-- Spring Boot Maven Plugin -->
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                <version>${spring-boot.version}</version>-->
-<!--                <configuration>-->
-<!--                    <mainClass>com.yang.home.HomeApplication</mainClass>-->
-<!--                    <skip>false</skip>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>repackage</id>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--                <version>${spring-boot.version}</version>-->
+            <!--                <configuration>-->
+            <!--                    <mainClass>com.yang.home.HomeApplication</mainClass>-->
+            <!--                    <skip>false</skip>-->
+            <!--                </configuration>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>repackage</id>-->
+            <!--                        <goals>-->
+            <!--                            <goal>repackage</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
 
             <!--上面是打包成可执行Jar的plugin配置-->
 
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <version>3.8.1</version>
-                            <configuration>
-                                <source>1.8</source>
-                                <target>1.8</target>
-                                <encoding>UTF-8</encoding>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot-maven-plugin</artifactId>
-                            <version>${spring-boot.version}</version>
-                            <configuration>
-                                <mainClass>com.yang.home.HomeApplication</mainClass>
-                                <skip>true</skip>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>repackage</id>
-                                    <goals>
-                                        <goal>repackage</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <mainClass>com.yang.home.HomeApplication</mainClass>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- maven 打包时跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
