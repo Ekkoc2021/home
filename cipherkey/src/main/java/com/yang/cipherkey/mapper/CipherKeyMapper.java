@@ -10,4 +10,6 @@ import java.util.List;
 public interface CipherKeyMapper {
 
     List<CipherKeyDAO> selectByServiceName(String serviceName);
+
+    int insertCipherKey(CipherKeyDAO cipherKeyDAO);
 }
