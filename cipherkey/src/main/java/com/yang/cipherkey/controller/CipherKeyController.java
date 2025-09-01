@@ -24,7 +24,7 @@ public class CipherKeyController {
     @PostMapping("/add")
     public Result<CipherKeyDAO> add(@RequestBody CommonRequest<CipherKeyDTO>  request ) {
         logger.debug("添加密钥 {}",request.getData());
-        logger.debug("token：",request.getToken());
+        logger.debug("token：{}",request.getAppKey());
         Result<CipherKeyDAO> result = cipherKeyService.addCipherKey(request.getData());
         return result;
     }
