@@ -11,9 +11,9 @@ public interface CipherKeyService {
 
     Result<CipherKeyDAO> addCipherKey(CipherKeyDTO cipherKeyDTO);
 
-    Result updateCipherKey(CipherKeyDTO cipherKeyDTO);
+    Result modifyCipherKey(CipherKeyDTO cipherKeyDTO);
 
-    Result deleteCipherKey(CipherKeyDTO cipherKeyDTO);
+    Result removeCipherKey(CipherKeyDTO cipherKeyDTO);
 
     Result listCipherKey();
 

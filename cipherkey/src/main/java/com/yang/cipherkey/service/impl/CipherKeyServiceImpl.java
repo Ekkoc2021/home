@@ -42,12 +42,12 @@ public class CipherKeyServiceImpl implements CipherKeyService {
     }
 
     @Override
-    public Result updateCipherKey(CipherKeyDTO cipherKeyDTO) {
+    public Result modifyCipherKey(CipherKeyDTO cipherKeyDTO) {
         return null;
     }
 
     @Override
-    public Result deleteCipherKey(CipherKeyDTO cipherKeyDTO) {
+    public Result removeCipherKey(CipherKeyDTO cipherKeyDTO) {
         return null;
     }
 
