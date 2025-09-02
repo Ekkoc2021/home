@@ -6,8 +6,23 @@
         insert into CIPHERKEY(service_name,username,pwd,notes,category,update_time,create_time)
         values(#{serviceName},#{username},#{pwd},#{notes},#{category},#{updateTime},#{createTime})
     </insert>
+    <update id="updateCipherKey">
+        update CIPHERKEY
+        <set>
+            <if test="serviceName != null">service_name=#{serviceName},</if>
+            <if test="username != null">username=#{username},</if>
+            <if test="pwd != null">pwd=#{pwd},</if>
+            <if test="notes != null">notes=#{notes},</if>
+            <if test="category != null">category=#{category},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+        </set>
+        where id=#{id}
+    </update>
 
     <select id="selectByServiceName" resultType="com.yang.cipherkey.pojo.CipherKeyDAO" >
         select* from CIPHERKEY where service_name=#{serviceName}
+    </select>
+    <select id="selectById" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+        select * from CIPHERKEY where id=#{id}
     </select>
 </mapper>

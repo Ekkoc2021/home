@@ -12,4 +12,8 @@ public interface CipherKeyMapper {
     List<CipherKeyDAO> selectByServiceName(String serviceName);
 
     int insertCipherKey(CipherKeyDAO cipherKeyDAO);
+
+    int updateCipherKey(CipherKeyDAO cipherKeyDAO);
+
+    CipherKeyDAO selectById(int id);
 }
