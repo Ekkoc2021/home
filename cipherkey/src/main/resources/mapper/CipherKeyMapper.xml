@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yang.cipherkey.mapper.CipherKeyMapper">
-    <insert id="insertCipherKey">
+    <insert id="insertCipherKey" useGeneratedKeys="true" keyProperty="id">
         insert into CIPHERKEY(service_name,username,pwd,notes,category,update_time,create_time)
         values(#{serviceName},#{username},#{pwd},#{notes},#{category},#{updateTime},#{createTime})
     </insert>
 
-    <select id="selectByServiceName" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+    <select id="selectByServiceName" resultType="com.yang.cipherkey.pojo.CipherKeyDAO" >
         select* from CIPHERKEY where service_name=#{serviceName}
     </select>
 </mapper>
