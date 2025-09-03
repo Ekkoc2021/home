@@ -7,4 +7,11 @@
         insert into CIPHERKEY_HIS(cipherkey_id,service_name,username,pwd,notes,category,update_time,create_time)
         values(#{cipherKeyId},#{serviceName},#{username},#{pwd},#{notes},#{category},#{updateTime},#{createTime})
     </insert>
+    <select id="getCipherKeyHisByCipherId" resultType="com.yang.cipherkey.pojo.CipherKeyHisDAO">
+        select * from CIPHERKEY_HIS where cipherkey_id=#{id} order by update_time desc
+    </select>
+    <select id="listCipherKeyHis" resultType="com.yang.cipherkey.pojo.CipherKeyHisDAO">
+        select *
+        from CIPHERKEY_HIS order by update_time desc
+    </select>
 </mapper>

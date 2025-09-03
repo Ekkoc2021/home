@@ -1,11 +1,14 @@
 package com.yang.cipherkey.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yang.cipherkey.mapper.CipherKeyHisMapper;
 import com.yang.cipherkey.mapper.CipherKeyMapper;
 import com.yang.cipherkey.pojo.CipherKeyDAO;
 import com.yang.cipherkey.pojo.CipherKeyDTO;
 import com.yang.cipherkey.pojo.CipherKeyHisDAO;
 import com.yang.cipherkey.pojo.Result;
+import com.yang.cipherkey.service.CipherKeyHisService;
 import com.yang.cipherkey.service.CipherKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +28,7 @@ public class CipherKeyServiceImpl implements CipherKeyService {
     CipherKeyMapper cipherKeyMapper;
 
     @Autowired
-    CipherKeyHisMapper cipherKeyHisMapper;
+    CipherKeyHisService cipherKeyHisService;
 
     @Override
     public Result getCipherKey() {
@@ -66,8 +69,9 @@ public class CipherKeyServiceImpl implements CipherKeyService {
         CipherKeyHisDAO cipherKeyHisDAO = new CipherKeyHisDAO();
         BeanUtils.copyProperties(oldCipherKeyDAO,cipherKeyHisDAO);
         cipherKeyHisDAO.setCipherKeyId(cipherKeyDAO.getId());
-        cipherKeyHisMapper.insertCipherKey(cipherKeyHisDAO);
+        cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
 
+        cipherKeyDAO.setUpdateTime(new Date(System.currentTimeMillis()));
         logger.debug("修改密钥:"+cipherKeyDAO);
         int count=cipherKeyMapper.updateCipherKey(cipherKeyDAO);
 
@@ -80,11 +84,36 @@ public class CipherKeyServiceImpl implements CipherKeyService {
 
     @Override
     public Result<CipherKeyDAO> removeCipherKey(CipherKeyDTO cipherKeyDTO) {
-        return null;
+        logger.debug("删除密钥:"+cipherKeyDTO);
+        CipherKeyDAO cipherKeyDAO = cipherKeyMapper.selectById(cipherKeyDTO.getId());
+        if (cipherKeyDAO == null){
+            return Result.error("没有该密钥");
+        }
+        CipherKeyHisDAO cipherKeyHisDAO = new CipherKeyHisDAO();
+        BeanUtils.copyProperties(cipherKeyDAO,cipherKeyHisDAO);
+        cipherKeyHisDAO.setCipherKeyId(cipherKeyDAO.getId());
+        cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
+        int count=cipherKeyMapper.deleteById(cipherKeyDTO.getId());
+
+        return Result.success(cipherKeyDAO);
     }
 
     @Override
-    public Result<List<CipherKeyDAO>> listCipherKey() {
-        return null;
+    public Result<PageInfo<CipherKeyDAO>> listCipherKey(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CipherKeyDAO> cipherKeyDAOS = cipherKeyMapper.selectAll();
+
+        //封装pageinfo
+        PageInfo<CipherKeyDAO> pageInfo = new PageInfo<>(cipherKeyDAOS);
+        return Result.success(pageInfo);
+    }
+
+    @Override
+    public  Result<PageInfo<CipherKeyDAO>> listCipherKeyByCipherKeyDTO(CipherKeyDTO data, int pageNum, int pageSize) {
+
+        PageHelper.startPage( pageNum, pageSize);
+        List<CipherKeyDAO> cipherKeyDAOS = cipherKeyMapper.selectByCipherKeyDTO(data);
+        PageInfo<CipherKeyDAO> pageInfo = new PageInfo<>(cipherKeyDAOS);
+        return Result.success(pageInfo);
     }
 }

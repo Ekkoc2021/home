@@ -1,11 +1,9 @@
 package com.yang.cipherkey.controller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.mysql.cj.log.Log;
-import com.yang.cipherkey.pojo.CipherKeyDAO;
-import com.yang.cipherkey.pojo.CipherKeyDTO;
-import com.yang.cipherkey.pojo.CommonRequest;
-import com.yang.cipherkey.pojo.Result;
+import com.yang.cipherkey.pojo.*;
 import com.yang.cipherkey.service.CipherKeyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,15 +38,23 @@ public class CipherKeyController {
 
     // 功能3：列出所有密钥
     @GetMapping("/list")
-    public Result<List<CipherKeyDAO>> listCipherKey() {
-        Result<List<CipherKeyDAO>> result = cipherKeyService.listCipherKey();
+    public Result<PageInfo<CipherKeyDAO>> listCipherKey(@RequestBody CommonRequest<PageRequest>  request) {
+        Result<PageInfo<CipherKeyDAO>> result = cipherKeyService.listCipherKey(request.getData().getPageNum(), request.getData().getPageSize());
         logger.debug("列出密钥 {}",result.getData());
         return result;
     }
 
     // 功能4：删除一个密钥
     @DeleteMapping("/delete")
-    public String deleteCipherKey() {
-        return "delete";
+    public Result<CipherKeyDAO> deleteCipherKey(@RequestBody CommonRequest<CipherKeyDTO>  request) {
+        Result<CipherKeyDAO> cipherKeyDAOResult = cipherKeyService.removeCipherKey(request.getData());
+        return cipherKeyDAOResult;
+    }
+
+    // 功能5:查找一个密码
+    @GetMapping("/search/{pageNum}/{pageSize}")
+    public  Result<PageInfo<CipherKeyDAO>> searchCipherKey(@RequestBody CommonRequest<CipherKeyDTO>  request,@PathVariable int pageNum,@PathVariable int pageSize) {
+        Result<PageInfo<CipherKeyDAO>> result = cipherKeyService.listCipherKeyByCipherKeyDTO(request.getData(),pageNum,pageSize);
+        return result;
     }
 }

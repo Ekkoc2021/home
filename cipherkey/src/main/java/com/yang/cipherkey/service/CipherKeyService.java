@@ -1,5 +1,6 @@
 package com.yang.cipherkey.service;
 
+import com.github.pagehelper.PageInfo;
 import com.yang.cipherkey.pojo.CipherKeyDAO;
 import com.yang.cipherkey.pojo.CipherKeyDTO;
 import com.yang.cipherkey.pojo.Result;
@@ -19,6 +20,7 @@ public interface CipherKeyService {
 
     Result<CipherKeyDAO> removeCipherKey(CipherKeyDTO cipherKeyDTO);
 
-    Result<List<CipherKeyDAO>>  listCipherKey();
+    Result<PageInfo<CipherKeyDAO>>  listCipherKey(int pageNum, int pageSize);
 
+    Result<PageInfo<CipherKeyDAO>>  listCipherKeyByCipherKeyDTO(CipherKeyDTO data, int pageNum, int pageSize);
 }

@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Data
 public class CipherKeyDAO {
-    private int id;
+    private Integer id;
     private String serviceName;
     private String username;
     private String pwd;

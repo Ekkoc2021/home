@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class CipherKeyDTO {
-    private int id;
+    private Integer id;
     private String serviceName;
     private String username;
     private String pwd;

@@ -18,11 +18,29 @@
         </set>
         where id=#{id}
     </update>
+    <delete id="deleteById">
+        delete from CIPHERKEY where id=#{id}
+    </delete>
 
     <select id="selectByServiceName" resultType="com.yang.cipherkey.pojo.CipherKeyDAO" >
         select* from CIPHERKEY where service_name=#{serviceName}
     </select>
     <select id="selectById" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
         select * from CIPHERKEY where id=#{id}
+    </select>
+    <select id="selectAll" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+        select * from CIPHERKEY
+    </select>
+    <select id="selectByCipherKeyDTO" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+        select * from CIPHERKEY
+        <where>
+            <if test="serviceName != null">and service_name like concat('%',#{serviceName},'%')</if>
+            <if test="username != null">and username like concat('%',#{username},'%')</if>
+            <if test="pwd != null">and pwd like concat('%',#{pwd},'%')</if>
+            <if test="notes != null">and notes like concat('%',#{notes},'%')</if>
+            <if test="category != null">and category like concat('%',#{category},'%')</if>
+          /*id*/
+          <if test="id != null">and id= #{id}</if>
+        </where>
     </select>
 </mapper>
