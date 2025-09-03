@@ -1,5 +1,6 @@
 package com.yang.cipherkey;
 
+import com.yang.home.common.utill.JwtUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -83,7 +84,27 @@ public class CollectionTest {
         MapUtils.putAll(dataMap, null);
     }
 
+    @Test
+    //测试JWT
+    void jwt() {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", "yang");
+        claims.put("password", "123456");
+        String token = JwtUtil.getToken(claims, "123456",JwtUtil.SECOND*30);
+        System.out.println(token);
 
+        Map<String, Object> stringObjectMap = JwtUtil.validateToken(token, "123456");
+        System.out.println(stringObjectMap);
+    }
+    @Test
+    void jwt2() {
+
+        Map<String, Object> stringObjectMap = JwtUtil.validateToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMzQ1NiIsImV4cCI6MTc1NjkwNDU2MSwiaWF0IjoxNzU2OTA0NTMwNjcyLCJ1c2VybmFtZSI6InlhbmcifQ.sD_YBRJgKE2ZrG4hzuOTvVMjFkGkj1aFEWyPrBp7w2A",
+                "123456");
+        System.out.println(new Date(System.currentTimeMillis()));
+        System.out.println(new Date(System.currentTimeMillis()));
+        System.out.println(stringObjectMap);
+    }
 
 
 }
