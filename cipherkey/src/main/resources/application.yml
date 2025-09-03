@@ -12,11 +12,14 @@ mybatis:
 
     map-underscore-to-camel-case: true # 驼峰转化
 
+login:
+  jwt:
+    secret: ekko
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource #指定druid数据源
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.75.223:3306/home?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.254.223:3306/home?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
     password: Asd456654.
     # druid 连接池管理

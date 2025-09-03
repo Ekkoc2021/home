@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping()
 public class CipherKeyController {
 
     Logger logger = LoggerFactory.getLogger(CipherKeyController.class);
@@ -21,7 +20,7 @@ public class CipherKeyController {
     @Autowired
     private CipherKeyService cipherKeyService;
     // 功能1：添加一个密钥
-    @PostMapping("/craete")
+    @PostMapping("/create")
     public Result<CipherKeyDAO> createCipherKey(@RequestBody CommonRequest<CipherKeyDTO>  request ) {
         logger.debug("添加密钥 {}",request.getData());
         logger.debug("token：{}",request.getAppKey());
