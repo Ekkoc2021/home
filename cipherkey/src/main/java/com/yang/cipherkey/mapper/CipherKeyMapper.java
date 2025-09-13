@@ -15,7 +15,7 @@ public interface CipherKeyMapper {
 
     int insertCipherKey(CipherKeyDAO cipherKeyDAO);
 
-    int updateCipherKey(CipherKeyDAO cipherKeyDAO);
+    int updateCipherKeyById(CipherKeyDAO cipherKeyDAO);
 
     CipherKeyDAO selectById(int id);
 
@@ -24,4 +24,6 @@ public interface CipherKeyMapper {
     int deleteById(int id);
 
     List<CipherKeyDAO> selectByCipherKeyDTO(CipherKeyDTO cipherKeyDTO);
+
+    int updateCipherKeyByServiceName(CipherKeyDAO cipherKeyDAO);
 }

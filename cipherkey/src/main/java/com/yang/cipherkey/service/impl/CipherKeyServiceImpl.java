@@ -62,39 +62,46 @@ public class CipherKeyServiceImpl implements CipherKeyService {
         BeanUtils.copyProperties(cipherKeyDTO,cipherKeyDAO);
 
         // 查询旧数据,然后入历史库
-        CipherKeyDAO oldCipherKeyDAO = cipherKeyMapper.selectById(cipherKeyDTO.getId());
-        if (oldCipherKeyDAO == null){
+//        CipherKeyDAO oldCipherKeyDAO = cipherKeyMapper.selectById(cipherKeyDTO.getId());
+        // 修改为根据service_name查询
+        List<CipherKeyDAO> oldCipherKeyDAOs = cipherKeyMapper.selectByServiceName(cipherKeyDTO.getServiceName());
+        // service_name只有一条数据
+        if (oldCipherKeyDAOs.size() ==0){
             return Result.error("没有该密钥");
         }
+        CipherKeyDAO oldCipherKeyDAO = oldCipherKeyDAOs.get(0);
         CipherKeyHisDAO cipherKeyHisDAO = new CipherKeyHisDAO();
         BeanUtils.copyProperties(oldCipherKeyDAO,cipherKeyHisDAO);
-        cipherKeyHisDAO.setCipherKeyId(cipherKeyDAO.getId());
-        cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
+        cipherKeyHisDAO.setCipherKeyId(oldCipherKeyDAO.getId());
 
         cipherKeyDAO.setUpdateTime(new Date(System.currentTimeMillis()));
         logger.debug("修改密钥:"+cipherKeyDAO);
-        int count=cipherKeyMapper.updateCipherKey(cipherKeyDAO);
+        int count=cipherKeyMapper.updateCipherKeyByServiceName(cipherKeyDAO);
 
         if(count>0){
+            cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
             return Result.success();
         }
-
         return Result.error("修改密钥失败!");
     }
 
     @Override
     public Result<CipherKeyDAO> removeCipherKey(CipherKeyDTO cipherKeyDTO) {
         logger.debug("删除密钥:"+cipherKeyDTO);
-        CipherKeyDAO cipherKeyDAO = cipherKeyMapper.selectById(cipherKeyDTO.getId());
-        if (cipherKeyDAO == null){
+        List<CipherKeyDAO> cipherKeyDAOs = cipherKeyMapper.selectByServiceName(cipherKeyDTO.getServiceName());
+        if (cipherKeyDAOs==null || cipherKeyDAOs.size()==0){
             return Result.error("没有该密钥");
         }
+        CipherKeyDAO cipherKeyDAO = cipherKeyDAOs.get(0);
         CipherKeyHisDAO cipherKeyHisDAO = new CipherKeyHisDAO();
         BeanUtils.copyProperties(cipherKeyDAO,cipherKeyHisDAO);
         cipherKeyHisDAO.setCipherKeyId(cipherKeyDAO.getId());
-        cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
-        int count=cipherKeyMapper.deleteById(cipherKeyDTO.getId());
+        int count=cipherKeyMapper.deleteById(cipherKeyDAO.getId());
 
+        if(count==0){
+           return Result.error("删除密钥失败!");
+        }
+        cipherKeyHisService.addCipherKeyHis(cipherKeyHisDAO);
         return Result.success(cipherKeyDAO);
     }
 

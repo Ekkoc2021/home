@@ -6,7 +6,7 @@
         insert into CIPHERKEY(service_name,username,pwd,notes,category,update_time,create_time)
         values(#{serviceName},#{username},#{pwd},#{notes},#{category},#{updateTime},#{createTime})
     </insert>
-    <update id="updateCipherKey">
+    <update id="updateCipherKeyById">
         update CIPHERKEY
         <set>
             <if test="serviceName != null">service_name=#{serviceName},</if>
@@ -18,6 +18,19 @@
         </set>
         where id=#{id}
     </update>
+
+    <update id="updateCipherKeyByServiceName">
+        update CIPHERKEY
+        <set>
+            <if test="username != null">username=#{username},</if>
+            <if test="pwd != null">pwd=#{pwd},</if>
+            <if test="notes != null">notes=#{notes},</if>
+            <if test="category != null">category=#{category},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+        </set>
+        where service_name=#{serviceName}
+    </update>
+
     <delete id="deleteById">
         delete from CIPHERKEY where id=#{id}
     </delete>

@@ -26,14 +26,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
 //                .excludePathPatterns("/user/login")//排除的url
                 .order(0); // 最先执行 越小越先执行
 
-        LoginInterceptor loginInterceptor = new LoginInterceptor();
-        loginInterceptor.setSecret(secret);
-        log.debug("secret:{}", secret);
-        log.debug("path:{}", contextPath+"/login");
-        registry.addInterceptor(loginInterceptor)
-                // 配置contextPath 就不要写完整路径了,否则不生效
-                .excludePathPatterns("/login")
-                .addPathPatterns("/**");
+        // 不用登录,只提供接口,在本地解密即可
+//        LoginInterceptor loginInterceptor = new LoginInterceptor();
+//        loginInterceptor.setSecret(secret);
+//        log.debug("secret:{}", secret);
+//        log.debug("path:{}", contextPath+"/login");
+//        registry.addInterceptor(loginInterceptor)
+//                // 配置contextPath 就不要写完整路径了,否则不生效
+//                .excludePathPatterns("/login")
+//                .addPathPatterns("/**");
 
     }
 }

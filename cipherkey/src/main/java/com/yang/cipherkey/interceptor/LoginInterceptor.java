@@ -12,6 +12,7 @@ import java.util.Map;
 
 
 // 交给容器去管理,帮忙注入 secret
+// 采用对称加密了,所以不用这个东西了
 public class LoginInterceptor implements HandlerInterceptor {
 
     public static Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);

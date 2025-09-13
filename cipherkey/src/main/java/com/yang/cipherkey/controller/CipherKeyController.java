@@ -36,7 +36,7 @@ public class CipherKeyController {
     }
 
     // 功能3：列出所有密钥
-    @GetMapping("/list")
+    @PostMapping("/list")
     public Result<PageInfo<CipherKeyDAO>> listCipherKey(@RequestBody CommonRequest<PageRequest>  request) {
         Result<PageInfo<CipherKeyDAO>> result = cipherKeyService.listCipherKey(request.getData().getPageNum(), request.getData().getPageSize());
         logger.debug("列出密钥 {}",result.getData());
@@ -51,9 +51,15 @@ public class CipherKeyController {
     }
 
     // 功能5:查找一个密码
-    @GetMapping("/search/{pageNum}/{pageSize}")
+    @PostMapping("/search/{pageNum}/{pageSize}")
     public  Result<PageInfo<CipherKeyDAO>> searchCipherKey(@RequestBody CommonRequest<CipherKeyDTO>  request,@PathVariable int pageNum,@PathVariable int pageSize) {
         Result<PageInfo<CipherKeyDAO>> result = cipherKeyService.listCipherKeyByCipherKeyDTO(request.getData(),pageNum,pageSize);
         return result;
     }
+
+    // 功能6:上传密钥
+
+    // 功能7:下载所有密钥
+
+    // 功能8：上传一个密钥:新数据就insert,旧数据就update
 }
