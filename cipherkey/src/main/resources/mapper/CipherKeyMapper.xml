@@ -44,7 +44,7 @@
     <select id="selectAll" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
         select * from CIPHERKEY
     </select>
-    <select id="selectByCipherKeyDTO" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+    <select id="selectByCipherKeyDTOFuzzy" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
         select * from CIPHERKEY
         <where>
             <if test="serviceName != null">and service_name like concat('%',#{serviceName},'%')</if>
@@ -54,6 +54,19 @@
             <if test="category != null">and category like concat('%',#{category},'%')</if>
           /*id*/
           <if test="id != null">and id= #{id}</if>
+        </where>
+    </select>
+
+    <select id="selectByCipherKeyDTO" resultType="com.yang.cipherkey.pojo.CipherKeyDAO">
+        select * from CIPHERKEY
+        <where>
+            <if test="serviceName != null">and service_name = #{serviceName}</if>
+            <if test="username != null">and username  =  #{username}</if>
+            <if test="pwd != null">and pwd  =  #{pwd}</if>
+            <if test="notes != null">and notes = #{notes}</if>
+            <if test="category != null">and category  = #{category}</if>
+            /*id*/
+            <if test="id != null">and id= #{id}</if>
         </where>
     </select>
 </mapper>

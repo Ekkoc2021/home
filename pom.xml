@@ -177,23 +177,23 @@
             </plugin>
 
             <!-- Spring Boot Maven Plugin -->
-            <!--            <plugin>-->
-            <!--                <groupId>org.springframework.boot</groupId>-->
-            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-            <!--                <version>${spring-boot.version}</version>-->
-            <!--                <configuration>-->
-            <!--                    <mainClass>com.yang.home.HomeApplication</mainClass>-->
-            <!--                    <skip>false</skip>-->
-            <!--                </configuration>-->
-            <!--                <executions>-->
-            <!--                    <execution>-->
-            <!--                        <id>repackage</id>-->
-            <!--                        <goals>-->
-            <!--                            <goal>repackage</goal>-->
-            <!--                        </goals>-->
-            <!--                    </execution>-->
-            <!--                </executions>-->
-            <!--            </plugin>-->
+<!--                        <plugin>-->
+<!--                            <groupId>org.springframework.boot</groupId>-->
+<!--                            <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                            <version>${spring-boot.version}</version>-->
+<!--                            <configuration>-->
+<!--                                <mainClass>com.yang.home.HomeApplication</mainClass>-->
+<!--                                <skip>false</skip>-->
+<!--                            </configuration>-->
+<!--                            <executions>-->
+<!--                                <execution>-->
+<!--                                    <id>repackage</id>-->
+<!--                                    <goals>-->
+<!--                                        <goal>repackage</goal>-->
+<!--                                    </goals>-->
+<!--                                </execution>-->
+<!--                            </executions>-->
+<!--                        </plugin>-->
 
             <!--上面是打包成可执行Jar的plugin配置-->
 

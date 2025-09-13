@@ -117,7 +117,7 @@ public class CipherKeyServiceImpl implements CipherKeyService {
 
     @Override
     public  Result<PageInfo<CipherKeyDAO>> listCipherKeyByCipherKeyDTO(CipherKeyDTO data, int pageNum, int pageSize) {
-
+        logger.debug("查询密钥:{}",data);
         PageHelper.startPage( pageNum, pageSize);
         List<CipherKeyDAO> cipherKeyDAOS = cipherKeyMapper.selectByCipherKeyDTO(data);
         PageInfo<CipherKeyDAO> pageInfo = new PageInfo<>(cipherKeyDAOS);

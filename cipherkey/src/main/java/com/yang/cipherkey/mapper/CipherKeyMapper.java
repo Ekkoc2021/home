@@ -23,6 +23,13 @@ public interface CipherKeyMapper {
 
     int deleteById(int id);
 
+    /**
+     * 模糊查询
+     * @param cipherKeyDTO
+     * @return
+     */
+    List<CipherKeyDAO> selectByCipherKeyDTOFuzzy(CipherKeyDTO cipherKeyDTO);
+
     List<CipherKeyDAO> selectByCipherKeyDTO(CipherKeyDTO cipherKeyDTO);
 
     int updateCipherKeyByServiceName(CipherKeyDAO cipherKeyDAO);
