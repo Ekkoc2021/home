@@ -1,0 +1,21 @@
+server:
+  port: 9998
+dubbo:
+  registry:
+    address: nacos://192.168.169.223:8848
+    parameters:
+      username: nacos
+      password: nacos
+      group: dubbo1
+  application:
+    name: dubbo-provider-demo
+  protocol:
+    name: dubbo
+    port: 20880
+  consumer:
+    check: false  # 关闭所有服务的启动时检查 ,使得即使没有提供方也能启动
+
+ncaos:
+  discovery:
+    metadata:
+      application: dubbo-provider-demo

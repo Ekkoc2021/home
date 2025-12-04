@@ -1,0 +1,21 @@
+server:
+  port: 9876
+dubbo:
+  registry:
+    address: nacos://192.168.169.223:8848
+    parameters:
+      username: nacos
+      password: nacos
+      group: dubbo1 # nacos的分组
+      register-consumer-url: true # 消费者也注册到nacos上
+  application:
+    name: dubbo-consumer-demo
+  protocol:
+    name: dubbo
+    port: 20881
+  consumer:
+    check: false  # 关闭所有服务的启动时检查 ,使得即使没有提供方也能启动
+ncaos:
+  discovery:
+    metadata:
+      application: dubbo-consumer-demo
